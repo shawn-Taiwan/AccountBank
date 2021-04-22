@@ -1,6 +1,6 @@
 *** Settings ***
 Library    AppiumLibrary
-Resource    ./commonVariable.txt
+Resource    ../commonVariable.txt
 
 Suite Setup    Open Account Bank
 Suite Teardown    Close Application
