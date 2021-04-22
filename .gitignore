@@ -1,0 +1,7 @@
+libspecs/
+log.html
+output.xml
+red.xml
+report.html
+*.project
+*.png
