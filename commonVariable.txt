@@ -1,0 +1,22 @@
+*** Settings ***
+Library     AppiumLibrary
+
+*** Variables ***
+${shortPeriodOfTime} =    10s
+${appium_server}    http://localhost:4723/wd/hub
+${packageName} =    com.zotiger.accountbook
+${appActivity} =    com.zotiger.accountbook.MainActivity
+
+*** Keywords ***
+Open Account Bank
+    Open Application    remote_url=${appium_server}    platformName=android    udid=emulator-5554    appPackage=${packageName}    appActivity=${appActivity}
+
+Click Elment After It Is Visible
+    [Arguments]    ${element}
+    Wait Until Element Is Visible On Page    ${element}
+    Click Element    ${element}
+
+Wait Until Element Is Visible On Page
+    [Arguments]    ${element}
+    Wait Until Page Contains Element    ${element}    timeout=${shortPeriodOfTime}    error=Element should be contain.
+    Wait Until Element Is Visible    ${element}    timeout=${shortPeriodOfTime}    error=Element should be visible.

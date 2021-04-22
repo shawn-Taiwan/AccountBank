@@ -20,11 +20,4 @@
 		<nature>org.robotframework.ide.eclipse.main.plugin.robotNature</nature>
 		<nature>org.python.pydev.pythonNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>libspecs/AppiumLibrary.py</name>
-			<type>1</type>
-			<location>C:/Program Files/Python36/Lib/site-packages/AppiumLibrary/keywords/_applicationmanagement.py</location>
-		</link>
-	</linkedResources>
 </projectDescription>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 3.2.2 (Python 3.6.5 on win32)" generated="20210419 11:32:26.047" rpa="false">
-<suite id="s1" name="Software Testing and Verification" source="C:\Users\lab1321\Desktop\Software_Testing_and_Verification">
-<suite id="s1-s1" name="Test" source="C:\Users\lab1321\Desktop\Software_Testing_and_Verification\test.robot">
+<robot generator="Robot 3.2.2 (Python 3.6.5 on win32)" generated="20210422 17:17:53.289" rpa="false">
+<suite id="s1" name="AccountBank" source="C:\Users\lab1321\Desktop\AccountBank">
+<suite id="s1-s1" name="Test" source="C:\Users\lab1321\Desktop\AccountBank\test.robot">
 <test id="s1-s1-t1" name="Test">
 <kw name="Open Account Bank">
 <kw name="Open Application" library="AppiumLibrary">
@@ -18,16 +18,32 @@ Please check https://github.com/appium/appium/blob/master/docs/en/writing-runnin
 <arg>appPackage=${packageName}</arg>
 <arg>appActivity=${appActivity}</arg>
 </arguments>
-<status status="PASS" starttime="20210419 11:32:26.873" endtime="20210419 11:32:41.894"></status>
+<status status="PASS" starttime="20210422 17:17:53.833" endtime="20210422 17:18:10.638"></status>
 </kw>
-<status status="PASS" starttime="20210419 11:32:26.872" endtime="20210419 11:32:41.894"></status>
+<status status="PASS" starttime="20210422 17:17:53.833" endtime="20210422 17:18:10.638"></status>
 </kw>
-<status status="PASS" starttime="20210419 11:32:26.871" endtime="20210419 11:32:41.895" critical="yes"></status>
+<kw name="Wait Until Element Is Visible" library="AppiumLibrary">
+<doc>Waits until element specified with `locator` is visible.</doc>
+<arguments>
+<arg>${test}</arg>
+<arg>timeout=30s</arg>
+</arguments>
+<status status="PASS" starttime="20210422 17:18:10.639" endtime="20210422 17:18:16.439"></status>
+</kw>
+<kw name="Click Element" library="AppiumLibrary">
+<doc>Click element identified by `locator`.</doc>
+<arguments>
+<arg>${test}</arg>
+</arguments>
+<msg timestamp="20210422 17:18:16.441" level="INFO">Clicking element 'xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.widget.ImageView'.</msg>
+<status status="PASS" starttime="20210422 17:18:16.439" endtime="20210422 17:18:17.133"></status>
+</kw>
+<status status="PASS" starttime="20210422 17:17:53.832" endtime="20210422 17:18:17.133" critical="yes"></status>
 </test>
 <doc>Run on pixel_3a device</doc>
-<status status="PASS" starttime="20210419 11:32:26.161" endtime="20210419 11:32:41.896"></status>
+<status status="PASS" starttime="20210422 17:17:53.383" endtime="20210422 17:18:17.134"></status>
 </suite>
-<status status="PASS" starttime="20210419 11:32:26.134" endtime="20210419 11:32:41.899"></status>
+<status status="PASS" starttime="20210422 17:17:53.355" endtime="20210422 17:18:17.136"></status>
 </suite>
 <statistics>
 <total>
@@ -37,8 +53,8 @@ Please check https://github.com/appium/appium/blob/master/docs/en/writing-runnin
 <tag>
 </tag>
 <suite>
-<stat pass="1" fail="0" id="s1" name="Software Testing and Verification">Software Testing and Verification</stat>
-<stat pass="1" fail="0" id="s1-s1" name="Test">Software Testing and Verification.Test</stat>
+<stat pass="1" fail="0" id="s1" name="AccountBank">AccountBank</stat>
+<stat pass="1" fail="0" id="s1-s1" name="Test">AccountBank.Test</stat>
 </suite>
 </statistics>
 <errors>
