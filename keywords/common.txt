@@ -1,0 +1,86 @@
+*** Settings ***
+Library     AppiumLibrary
+Library    String
+Resource    ../commonVariable.txt
+
+*** Variables ***
+${appDefaultLayout} =    xpath=//android.widget.FrameLayout/android.widget.LinearLayout
+${numberButton} =    xpath=//android.widget.Button[@content-desc=""]
+
+*** Keywords ***
+#TODO arguments "element" to "locator"?
+Wait Until Default View Is Visible
+    Wait Until Element Is Visible On Page    ${appDefaultLayout}
+
+Open Account Bank
+    Open Application    remote_url=${appium_server}    platformName=android    udid=emulator-5554    appPackage=${packageName}    appActivity=${appActivity}
+    Wait Until Default View Is Visible
+
+Click Element On Page
+    [Arguments]    ${element}
+    Wait Until Element Is Visible On Page    ${element}
+    Click Element    ${element}
+
+Wait Until Element Is Visible On Page
+    [Arguments]    ${element}
+    Wait Until Page Contains Element    ${element}    timeout=${shortPeriodOfTime}    error=Element should be contain.
+    Wait Until Element Is Visible    ${element}    timeout=${shortPeriodOfTime}    error=Element should be visible.
+
+Wait Until Elements Are Visible On Page
+    [Arguments]    @{elements}
+    FOR    ${element}    IN    @{elements}
+        Wait Until Element Is Visible On Page    ${element}
+    END
+
+Wait Until Expense View Is Visible
+    ${dietIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="diet"]
+    ${diaryIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="daily"]
+    @{elements} =     Create List    ${dietIcon}    ${diaryIcon}
+    Wait Until Elements Are Visible On Page    @{elements}
+
+Wait Until Income View Is Visible
+    ${wageIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="wage"]
+    ${bonusIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="bonus"]
+    @{elements} =     Create List    ${wageIcon}    ${bonusIcon}
+    Wait Until Elements Are Visible On Page    @{elements}
+
+Wait Until Add New Transaction View Is Visible
+    Wait Until Expense View Is Visible
+    ${inputTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText
+    Wait Until Element Is Visible On Page    ${inputTextField}
+
+Select Income On New Transaction View
+    ${incomeIcon} =    Set Variable    //android.view.View[@content-desc="Income"]
+    Wait Until Element Is Visible On Page    ${incomeIcon}
+    Click Element On Page    ${incomeIcon}
+    Wait Until Income View Is Visible
+
+Choose Type On New Transaction View
+    [Arguments]    ${type}
+    ${typeView} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View
+    ${typeIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="${type}"]
+    Scroll    ${typeIcon}    ${typeView}
+    Click Element On Page    ${typeIcon}
+
+Click Digital Button On New Transaction View
+    [Arguments]    ${digital}
+    ${digitalButton} =    Set Variable    xpath=//android.widget.Button[@content-desc="${digital}"]
+    Click Element On Page    ${digitalButton}
+
+Input Amount On New Transaction View
+    [Arguments]    ${amount}    ${account}=default account    ${unit}=USD
+    ${amountField} =    Set Variable    //android.view.View[@content-desc="${account}(${unit})${amount}"]
+    @{digitals} =    Split String To Characters    ${amount}
+    FOR    ${digital}    IN    @{digitals}
+        Click Digital Button On New Transaction View    ${digital}
+    END
+    Wait Until Element Is Visible On Page    ${amountField}
+
+Click OK Button On New Transaction View
+    ${okButton} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View[4]/android.widget.ImageView
+    Click Element On Page    ${okButton}
+
+Transaction Should Be Visible On Default View
+    [Arguments]    ${type}    ${amount}    ${from}=myself    ${account}=default account
+    ${transactionInfo} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]
+    Wait Until Element Is Visible On Page    ${transactionInfo}
