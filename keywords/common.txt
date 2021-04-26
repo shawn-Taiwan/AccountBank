@@ -1,11 +1,14 @@
 *** Settings ***
-Library     AppiumLibrary
+Library    AppiumLibrary
 Library    String
 Resource    ../commonVariable.txt
 
 *** Variables ***
 ${appDefaultLayout} =    xpath=//android.widget.FrameLayout/android.widget.LinearLayout
-${numberButton} =    xpath=//android.widget.Button[@content-desc=""]
+${addNewTransactionButton} =    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.widget.ImageView
+${walletButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Wallet") and contains(@content-desc, "Tab") and contains(@content-desc, "2")]
+${analyticsButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Analytics") and contains(@content-desc, "Tab") and contains(@content-desc, "3")]
+${settingsButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Settings") and contains(@content-desc, "Tab") and contains(@content-desc, "4")]
 
 *** Keywords ***
 #TODO arguments "element" to "locator"?
@@ -49,6 +52,10 @@ Wait Until Add New Transaction View Is Visible
     ${inputTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText
     Wait Until Element Is Visible On Page    ${inputTextField}
 
+Open New Transaction View
+    Click Element On Page    ${addNewTransactionButton}
+    Wait Until Add New Transaction View Is Visible
+
 Select Income On New Transaction View
     ${incomeIcon} =    Set Variable    //android.view.View[@content-desc="Income"]
     Wait Until Element Is Visible On Page    ${incomeIcon}
@@ -84,3 +91,34 @@ Transaction Should Be Visible On Default View
     [Arguments]    ${type}    ${amount}    ${from}=myself    ${account}=default account
     ${transactionInfo} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]
     Wait Until Element Is Visible On Page    ${transactionInfo}
+
+Wait Until Add New Book View Is Visible
+    ${addBookButtonOnNewBookView} =    Set Variable    xpath=//android.view.View[@content-desc="+Add"]
+    Wait Until Element Is Visible On Page    ${addBookButtonOnNewBookView}
+
+Wait Until Wallet View Is Visible
+    ${cashText} =    Set Variable    xpath=//android.view.View[@content-desc="Cash"]
+    Wait Until Element Is Visible On Page    ${cashText}
+
+Open Wallet View
+    Click Element On Page    ${walletButton}
+    Wait Until Wallet View Is Visible
+
+Wait Until Analytics View Is Visible
+    ${titleText} =    Set Variable    xpath=//android.view.View[@content-desc="Analytics"]
+    Wait Until Element Is Visible On Page    ${titleText}
+
+Open Analytics View
+    Click Element On Page    ${analyticsButton}
+    Wait Until Analytics View Is Visible
+
+Wait Until Settings View Is Visible
+    ${languageIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Language"]
+    ${themeSettingsIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Theme Settings"]
+    ${periodicBillIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Periodic bill"]
+    @{elements} =     Create List    ${languageIcon}    ${themeSettingsIcon}    ${periodicBillIcon}
+    Wait Until Elements Are Visible On Page    @{elements}
+
+Open Settings View
+    Click Element On Page    ${settingsButton}
+    Wait Until Settings View Is Visible
