@@ -122,3 +122,14 @@ Wait Until Settings View Is Visible
 Open Settings View
     Click Element On Page    ${settingsButton}
     Wait Until Settings View Is Visible
+
+Click Account To Edit Page
+    Click Element On Page    //android.widget.ImageView[@content-desc="Accounts"]
+    Click Element On Page    //android.widget.ImageView[@content-desc="default account"]
+
+Change Currency
+    Click Element On Page    //android.widget.ImageView[contains(@content-desc, "American dollar(USD)")]
+    Click Element On Page    //android.view.View[contains(@content-desc, "Taiwan Dollar")]
+
+Currency Should Be TWD
+    Wait Until Element Is Visible On Page    //android.widget.ImageView[contains(@content-desc, "Taiwan Dollar(TWD)")]

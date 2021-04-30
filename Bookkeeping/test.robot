@@ -39,3 +39,9 @@ Open analytics view
 
 Open settings view
     Open Settings View
+
+Change currency from USD to NTD
+    [Setup]    Run Keywords    Open Settings View
+    Click Account To Edit Page
+    Change Currency
+    Currency Should Be TWD
