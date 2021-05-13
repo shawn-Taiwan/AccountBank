@@ -10,7 +10,6 @@ ${walletButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "W
 ${analyticsButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Analytics") and contains(@content-desc, "Tab") and contains(@content-desc, "3")]
 ${settingsButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Settings") and contains(@content-desc, "Tab") and contains(@content-desc, "4")]
 *** Keywords ***
-#TODO arguments "element" to "locator"?
 Wait Until Default View Is Visible
     Wait Until Element Is Visible On Page    ${appDefaultLayout}
 
@@ -19,19 +18,19 @@ Open Account Bank
     Wait Until Default View Is Visible
 
 Click Element On Page
-    [Arguments]    ${element}
-    Wait Until Element Is Visible On Page    ${element}
-    Click Element    ${element}
+    [Arguments]    ${locator}
+    Wait Until Element Is Visible On Page    ${locator}
+    Click Element    ${locator}
 
 Wait Until Element Is Visible On Page
-    [Arguments]    ${element}
-    Wait Until Page Contains Element    ${element}    timeout=${shortPeriodOfTime}    error=Element should be contain.
-    Wait Until Element Is Visible    ${element}    timeout=${shortPeriodOfTime}    error=Element should be visible.
+    [Arguments]    ${locator}
+    Wait Until Page Contains Element    ${locator}    timeout=${shortPeriodOfTime}    error=Element should be contain.
+    Wait Until Element Is Visible    ${locator}    timeout=${shortPeriodOfTime}    error=Element should be visible.
 
 Wait Until Elements Are Visible On Page
-    [Arguments]    @{elements}
-    FOR    ${element}    IN    @{elements}
-        Wait Until Element Is Visible On Page    ${element}
+    [Arguments]    @{locators}
+    FOR    ${locator}    IN    @{locators}
+        Wait Until Element Is Visible On Page    ${locator}
     END
 
 Wait Until Expense View Is Visible
@@ -86,6 +85,9 @@ Click OK Button On New Transaction View
     ${okButton} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View[4]/android.widget.ImageView
     Click Element On Page    ${okButton}
 
+Default View Should Be Visible
+    Wait Until Default View Is Visible
+
 Transaction Should Be Visible On Default View
     [Arguments]    ${type}    ${amount}    ${from}=myself    ${account}=default account
     ${transactionInfo} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]
@@ -122,16 +124,25 @@ Open Settings View
     Click Element On Page    ${settingsButton}
     Wait Until Settings View Is Visible
 
-Click Account To Edit Page
-    Click Element On Page    //android.widget.ImageView[@content-desc="Accounts"]
-    Click Element On Page    //android.widget.ImageView[@content-desc="default account"]
+Click Account On Edit View
+    ${accountsIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Accounts"]
+    ${accountIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="default account"]
+    Click Element On Page    ${accountsIcon}
+    #TODO Wait Until Element Is Visible On Page
+    Click Element On Page    ${accountIcon}
 
 Change Currency
-    Click Element On Page    //android.widget.ImageView[contains(@content-desc, "American dollar(USD)")]
-    Click Element On Page    //android.view.View[contains(@content-desc, "Taiwan Dollar")]
+    [Arguments]    ${currency}
+    ${defaultCurrencyIcon} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, "American dollar(USD)")]
+    ${newCurrencyIcon} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "${currency}")]
+    Click Element On Page    ${defaultCurrencyIcon}
+    #TODO check?
+    Click Element On Page    ${newCurrencyIcon}
 
-Currency Should Be TWD
-    Wait Until Element Is Visible On Page    //android.widget.ImageView[contains(@content-desc, "Taiwan Dollar(TWD)")]
+Currency Should Be
+    [Arguments]    ${currency}
+    ${currencyText} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, "${currency}")]
+    Wait Until Element Is Visible On Page    ${currencyText}
 
 Change Member
     [Arguments]    ${member}
@@ -141,7 +152,7 @@ Change Member
     Click Element On Page    ${memberButton}
     Wait Until Element Is Visible On Page    ${memberChooseTitle}
     Click Element On Page    ${wifeButton}
-    
+
 Change Date
     ${dateButton} =    Set Variable    //android.widget.Button[@content-desc="TODAY"]
     ${penButton} =    Set Variable    //android.widget.Button[@content-desc="Switch to input"]
@@ -154,8 +165,9 @@ Change Date
     Click Element On Page    ${okButton}
     Wait Until Element Is Visible On Page    ${nowDateButton}
 
-Click Equal Button
-    Click Element On Page    //android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View[4]/android.widget.ImageView
+Click Equal Button On Transaction View
+    ${equalButton} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View[4]/android.widget.ImageView
+    Click Element On Page    ${equalButton}
 
 Number On View Should Be
     [Arguments]    ${amount}    ${account}=default account    ${unit}=USD
@@ -163,7 +175,10 @@ Number On View Should Be
     Wait Until Element Is Visible On Page    ${amountField}
 
 Switch To Calendar View
-    Click Element On Page    //android.view.View[@content-desc="Calendar"]
+    ${calendarButton} =    Set Variable    xpath=//android.view.View[@content-desc="Calendar"]
+    # ${calendarImage} =    Set Variable    
+    Click Element On Page    ${calendarButton}
+    #TODO check calendar is visible
 
 Change View To Week, 2Weeks, Month
     ${changeToWeek} =    Set Variable    //android.view.View[@content-desc="Month"]
@@ -189,7 +204,7 @@ Edit Transaction Type
     Choose Type On New Transaction View    type=${newType}
     Click OK Button On New Transaction View
 
-Click Expense Analysis
+Click Expense Analysis On Default View
     ${expenseText} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Expenses") and (not(contains(@content-desc, ":")))]
     ${expenseAnalysisTitle} =    Set Variable    xpath=//android.view.View[@content-desc="Expense"]
     ${analysisDropdown} =     Set Variable    xpath=//android.view.View[contains(@content-desc, 'Show') and contains(@content-desc, 'menu') and contains(@content-desc, 'By') and contains(@content-desc, 'Category')]
@@ -197,10 +212,10 @@ Click Expense Analysis
     Wait Until Elements Are Visible On Page    ${expenseAnalysisTitle}    ${analysisDropdown}
 
 Click Income Analysis
-    # ${incomeText} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Income") and (not(contains(@content-desc, "Expenses")))]
+    &{incomeIcon} =    Create Dictionary    x=730    y=473
     ${incomeAnalysisTitle} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Income")]
     ${analysisDropdown} =     Set Variable    xpath=//android.view.View[contains(@content-desc, 'Show') and contains(@content-desc, 'menu') and contains(@content-desc, 'By') and contains(@content-desc, 'Category')]
-    Click Element At Coordinates    730    473
+    Click Element At Coordinates    ${incomeIcon}[x]    ${incomeIcon}[y]
     Wait Until Elements Are Visible On Page    ${incomeAnalysisTitle}    ${analysisDropdown}
 
 Analysis Figure Should Be Visible

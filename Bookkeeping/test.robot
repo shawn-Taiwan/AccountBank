@@ -14,7 +14,7 @@ Add a new expense transaction on default view
     Choose Type On New Transaction View    type=pet
     Input Amount On New Transaction View    amount=56123
     Click OK Button On New Transaction View
-    Wait Until Default View Is Visible
+    Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=pet    amount=-$56,123
 
 Add a new income transaction on default view
@@ -23,7 +23,7 @@ Add a new income transaction on default view
     Choose Type On New Transaction View    type=parttime job
     Input Amount On New Transaction View    amount=551234
     Click OK Button On New Transaction View
-    Wait Until Default View Is Visible
+    Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=parttime job    amount=+$551,234
 
 Add a new expense with different member
@@ -31,7 +31,7 @@ Add a new expense with different member
     Change Member    member=wife
     Input Amount On New Transaction View    amount=551234
     Click OK Button On New Transaction View
-    Wait Until Default View Is Visible
+    Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=diet    amount=-$551,234    from=wife
 
 Add a new income transaction with different member
@@ -41,7 +41,7 @@ Add a new income transaction with different member
     Change Member    member=wife
     Input Amount On New Transaction View    amount=551234
     Click OK Button On New Transaction View
-    Wait Until Default View Is Visible
+    Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=bonus    amount=+$551,234    from=wife
 
 Add a new expense with different date
@@ -49,7 +49,7 @@ Add a new expense with different date
     Change Date
     Input Amount On New Transaction View    amount=551234
     Click OK Button On New Transaction View
-    Wait Until Default View Is Visible
+    Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=diet    amount=-$551,234
 
 Add a new income with different date
@@ -58,30 +58,30 @@ Add a new income with different date
     Change Date
     Input Amount On New Transaction View    amount=551234
     Click OK Button On New Transaction View
-    Wait Until Default View Is Visible
+    Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=wage    amount=+$551,234
 
 Add a new expense with different calculation
     Open New Transaction View
     Input Amount On New Transaction View    amount=23x11
-    Click Equal Button
+    Click Equal Button On Transaction View
     Number On View Should Be    253
     Click OK Button On New Transaction View
-    Wait Until Default View Is Visible
+    Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=diet    amount=-$253
 
 Add a new income with different calculation
     Open New Transaction View
     Select Income On New Transaction View
     Input Amount On New Transaction View    amount=23/23
-    Click Equal Button
+    Click Equal Button On Transaction View
     Number On View Should Be    1
     Click OK Button On New Transaction View
-    Wait Until Default View Is Visible
+    Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=wage    amount=+$1
 
 Watch information with month, 2week, and week
-    Wait Until Default View Is Visible
+    Default View Should Be Visible
     Switch To Calendar View
     Change View To Week, 2Weeks, Month
 
@@ -89,7 +89,7 @@ Edit a expense transaction on default view
     [setup]    Run Keywords    Open New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=56123
     ...                 AND    Click OK Button On New Transaction View
-    ...                 AND    Wait Until Default View Is Visible
+    ...                 AND    Default View Should Be Visible
     ...                 AND    Transaction Should Be Visible On Default View    type=diet    amount=-$56,123
     Edit Transaction Type    newType=gift    type=diet    amount=-$56,123
     Transaction Should Be Visible On Default View    type=gift    amount=-$56,123
@@ -99,7 +99,7 @@ Edit a income transaction on default view
     ...                 AND    Select Income On New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=56123
     ...                 AND    Click OK Button On New Transaction View
-    ...                 AND    Wait Until Default View Is Visible
+    ...                 AND    Default View Should Be Visible
     ...                 AND    Transaction Should Be Visible On Default View    type=wage    amount=+$56,123
     Edit Transaction Type    newType=investment    type=wage    amount=+$56,123
     Transaction Should Be Visible On Default View    type=investment    amount=+$56,123
@@ -108,9 +108,9 @@ Watch expense analysis
     [setup]    Run Keywords    Open New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=77777
     ...                 AND    Click OK Button On New Transaction View
-    ...                 AND    Wait Until Default View Is Visible
+    ...                 AND    Default View Should Be Visible
     ...                 AND    Transaction Should Be Visible On Default View    type=diet    amount=-$77,777
-    Click Expense Analysis
+    Click Expense Analysis On Default View
     Expense Analysis Should Be Visible
 
 Watch income analysis
@@ -118,7 +118,7 @@ Watch income analysis
     ...                 AND    Select Income On New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=66666
     ...                 AND    Click OK Button On New Transaction View
-    ...                 AND    Wait Until Default View Is Visible
+    ...                 AND    Default View Should Be Visible
     ...                 AND    Transaction Should Be Visible On Default View    type=wage    amount=+$66,666
     Click Income Analysis
     Income Analysis Should Be Visible
@@ -139,6 +139,6 @@ Open settings view
 
 Change currency from USD to NTD
     [Setup]    Run Keywords    Open Settings View
-    Click Account To Edit Page
-    Change Currency
-    Currency Should Be TWD
+    Click Account On Edit View
+    Change Currency    Taiwan Dollar
+    Currency Should Be    currency=Taiwan Dollar(TWD)
