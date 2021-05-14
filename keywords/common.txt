@@ -6,9 +6,11 @@ Resource    ../commonVariable.txt
 *** Variables ***
 ${appDefaultLayout} =    xpath=//android.widget.FrameLayout/android.widget.LinearLayout
 ${addNewTransactionButton} =    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.widget.ImageView
+${booksButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Books") and contains(@content-desc, "Tab") and contains(@content-desc, "1")]
 ${walletButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Wallet") and contains(@content-desc, "Tab") and contains(@content-desc, "2")]
 ${analyticsButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Analytics") and contains(@content-desc, "Tab") and contains(@content-desc, "3")]
 ${settingsButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Settings") and contains(@content-desc, "Tab") and contains(@content-desc, "4")]
+
 *** Keywords ***
 Wait Until Default View Is Visible
     Wait Until Element Is Visible On Page    ${appDefaultLayout}
@@ -101,7 +103,7 @@ Wait Until Wallet View Is Visible
     ${cashText} =    Set Variable    xpath=//android.view.View[@content-desc="Cash"]
     Wait Until Element Is Visible On Page    ${cashText}
 
-Open Wallet View
+Go To Wallet View
     Click Element On Page    ${walletButton}
     Wait Until Wallet View Is Visible
 
@@ -109,7 +111,7 @@ Wait Until Analytics View Is Visible
     ${titleText} =    Set Variable    xpath=//android.view.View[@content-desc="Analytics"]
     Wait Until Element Is Visible On Page    ${titleText}
 
-Open Analytics View
+Go To Analytics View
     Click Element On Page    ${analyticsButton}
     Wait Until Analytics View Is Visible
 
@@ -120,16 +122,22 @@ Wait Until Settings View Is Visible
     @{elements} =     Create List    ${languageIcon}    ${themeSettingsIcon}    ${periodicBillIcon}
     Wait Until Elements Are Visible On Page    @{elements}
 
-Open Settings View
+Go To Settings View
     Click Element On Page    ${settingsButton}
     Wait Until Settings View Is Visible
 
-Click Account On Edit View
+Click Accounts On Settings View
     ${accountsIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Accounts"]
-    ${accountIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="default account"]
+    ${accountTitle} =    Set Variable    xpath=//android.view.View[@content-desc="Accounts"]
     Click Element On Page    ${accountsIcon}
-    #TODO Wait Until Element Is Visible On Page
-    Click Element On Page    ${accountIcon}
+    Wait Until Element Is Visible On Page    ${accountTitle}
+
+Select Account On Accounts View
+    [Arguments]    ${accountName}
+    ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="${accountName}"]
+    ${accountEditView} =    Set Variable    xpath=//android.view.View[@content-desc="Edit Account"]
+    Click Element On Page    ${accountLabel}
+    Wait Until Element Is Visible On Page    ${accountEditView}
 
 Change Currency
     [Arguments]    ${currency}
@@ -227,3 +235,41 @@ Expense Analysis Should Be Visible
 
 Income Analysis Should Be Visible
     Analysis Figure Should Be Visible
+
+Go To Books View
+    Click Element On Page    ${booksButton}
+    Wait Until Wallet View Is Visible
+
+Open New Account View
+    ${addButton} =    Set Variable    xpath=//android.view.View[@content-desc="+Add"]
+    ${newAccountLabel} =    Set Variable    xpath=//android.view.View[@content-desc="New Account"]
+    Click Element On Page    ${addButton}
+    Wait Until Element Is Visible On Page    ${newAccountLabel}
+
+Choose Account Type
+    [Arguments]    ${type}
+    ${typeLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}')]
+    ${editView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Create") and contains(@content-desc, '${type}')]
+    Click Element On Page    ${typeLabel}
+    Wait Until Element Is Visible On Page    ${editView}
+
+Input New Account Name
+    [Arguments]    ${name}
+    # ${nameTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.ImageView[1]
+    ${nameTextField} =    Set Variable    xpath=//android.widget.EditText[contains(@content-desc, 'Account Name')]
+    # Click Element On Page    ${nameTextField}
+    # Set
+    Input Text    ${nameTextField}    ${name}
+
+Add A New Account
+    [Arguments]    ${name}=newAccount    ${type}=Cash    ${balance}=1000    ${currency}=${EMPTY}    ${icon}=${EMPTY}    ${note}=${EMPTY}
+    Click Accounts On Settings View
+    Open New Account View
+    Choose Account Type    ${type}
+    Input New Account Name    ${name}
+    # Input New Account Balance    ${balance}
+    # Choose New Account Currency    ${currency}
+    # Choose New Account Icon    ${icon}
+    # Input New Account Note    ${note}
+    # Save
+    # Wait Until Elements

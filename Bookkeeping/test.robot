@@ -86,7 +86,7 @@ Watch information with month, 2week, and week
     Change View To Week, 2Weeks, Month
 
 Edit a expense transaction on default view
-    [setup]    Run Keywords    Open New Transaction View
+    [Setup]    Run Keywords    Open New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=56123
     ...                 AND    Click OK Button On New Transaction View
     ...                 AND    Default View Should Be Visible
@@ -95,7 +95,7 @@ Edit a expense transaction on default view
     Transaction Should Be Visible On Default View    type=gift    amount=-$56,123
 
 Edit a income transaction on default view
-    [setup]    Run Keywords    Open New Transaction View
+    [Setup]    Run Keywords    Open New Transaction View
     ...                 AND    Select Income On New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=56123
     ...                 AND    Click OK Button On New Transaction View
@@ -105,7 +105,7 @@ Edit a income transaction on default view
     Transaction Should Be Visible On Default View    type=investment    amount=+$56,123
 
 Watch expense analysis
-    [setup]    Run Keywords    Open New Transaction View
+    [Setup]    Run Keywords    Open New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=77777
     ...                 AND    Click OK Button On New Transaction View
     ...                 AND    Default View Should Be Visible
@@ -114,7 +114,7 @@ Watch expense analysis
     Expense Analysis Should Be Visible
 
 Watch income analysis
-    [setup]    Run Keywords    Open New Transaction View
+    [Setup]    Run Keywords    Open New Transaction View
     ...                 AND    Select Income On New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=66666
     ...                 AND    Click OK Button On New Transaction View
@@ -123,22 +123,29 @@ Watch income analysis
     Click Income Analysis
     Income Analysis Should Be Visible
 
+Add a new expense with different account
+    [Setup]    Run Keywords    Go To Settings View
+    ...                 AND    Add A New Account
+    ...                 AND    Go To Books View
+    Log    123
+
 Add a new book on default view
     Click Element On Page    ${addNewBookButton}
     Wait Until Add New Book View Is Visible
     #FIXME The payment page will open after click add book button
 
 Open wallet view
-    Open Wallet View
+    Go To Wallet View
 
 Open analytics view
-    Open Analytics View
+    Go To Analytics View
 
 Open settings view
-    Open Settings View
+    Go To Settings View
 
 Change currency from USD to NTD
-    [Setup]    Run Keywords    Open Settings View
-    Click Account On Edit View
+    [Setup]    Run Keywords    Go To Settings View
+    Click Accounts On Settings View
+    Select Account On Accounts View    default account
     Change Currency    Taiwan Dollar
     Currency Should Be    currency=Taiwan Dollar(TWD)
