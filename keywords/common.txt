@@ -10,56 +10,96 @@ ${booksButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Bo
 ${walletButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Wallet") and contains(@content-desc, "Tab") and contains(@content-desc, "2")]
 ${analyticsButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Analytics") and contains(@content-desc, "Tab") and contains(@content-desc, "3")]
 ${settingsButton} =    xpath=//android.widget.ImageView[contains(@content-desc, "Settings") and contains(@content-desc, "Tab") and contains(@content-desc, "4")]
+&{a} =    x=116    y=1727
+&{b} =    x=639    y=1861
+&{c} =    x=433    y=1865
+&{d} =    x=325    y=1723
+&{e} =    x=273    y=1588
+&{f} =    x=426    y=1715
+&{g} =    x=542    y=1734
+&{h} =    x=639    y=1723
+&{i} =    x=800    y=1584
+&{j} =    x=751    y=1723
+&{k} =    x=848    y=1723
+&{l} =    x=964    y=1723
+&{m} =    x=852    y=1861
+&{n} =    x=747    y=1861
+&{o} =    x=904    y=1584
+&{p} =    x=1013    y=1584
+&{q} =    x=60    y=1588
+&{r} =    x=370    y=1581
+&{s} =    x=217    y=1723
+&{t} =    x=482    y=1584
+&{u} =    x=699    y=1584
+&{v} =    x=534    y=1861
+&{w} =    x=164    y=1584
+&{x} =    x=321    y=1861
+&{y} =    x=587    y=1584
+&{z} =    x=217    y=1861
+&{charactersPosition} =    a=${a}    b=${b}    c=${c}    d=${d}    e=${e}    f=${f}    g=${g}    h=${h}    i=${i}    j=${j}    k=${k}    l=${l}    m=${m}    n=${n}    o=${o}    p=${p}    q=${q}    r=${r}    s=${s}    t=${t}    u=${u}    v=${v}    w=${w}    x=${x}    y=${y}    z=${z}
+&{shiftButton} =    x=86    y=1861
+&{0} =    x=403    y=2006
+&{1} =    x=141    y=1599
+&{2} =    x=403    y=1599
+&{3} =    x=669    y=1599
+&{4} =    x=141    y=1736
+&{5} =    x=403    y=1736
+&{6} =    x=669    y=1736
+&{7} =    x=141    y=1869
+&{8} =    x=403    y=1869
+&{9} =    x=669    y=1869
+&{dot} =    x=137    y=2035
+&{numbersPosition} =    .=${dot}    0=${0}    1=${1}    2=${2}    3=${3}    4=${4}    5=${5}    6=${6}    7=${7}    8=${8}    9=${9}
 
 *** Keywords ***
 Wait Until Default View Is Visible
-    Wait Until Element Is Visible On Page    ${appDefaultLayout}
+    Wait Until Element Is Visible On View    ${appDefaultLayout}
 
 Open Account Bank
     Open Application    remote_url=${appium_server}    platformName=android    udid=emulator-5554    appPackage=${packageName}    appActivity=${appActivity}
     Wait Until Default View Is Visible
 
-Click Element On Page
+Click Element On View
     [Arguments]    ${locator}
-    Wait Until Element Is Visible On Page    ${locator}
+    Wait Until Element Is Visible On View    ${locator}
     Click Element    ${locator}
 
-Wait Until Element Is Visible On Page
+Wait Until Element Is Visible On View
     [Arguments]    ${locator}
     Wait Until Page Contains Element    ${locator}    timeout=${shortPeriodOfTime}    error=Element should be contain.
     Wait Until Element Is Visible    ${locator}    timeout=${shortPeriodOfTime}    error=Element should be visible.
 
-Wait Until Elements Are Visible On Page
+Wait Until Elements Are Visible On View
     [Arguments]    @{locators}
     FOR    ${locator}    IN    @{locators}
-        Wait Until Element Is Visible On Page    ${locator}
+        Wait Until Element Is Visible On View    ${locator}
     END
 
 Wait Until Expense View Is Visible
     ${dietIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="diet"]
     ${diaryIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="daily"]
     @{elements} =     Create List    ${dietIcon}    ${diaryIcon}
-    Wait Until Elements Are Visible On Page    @{elements}
+    Wait Until Elements Are Visible On View    @{elements}
 
 Wait Until Income View Is Visible
     ${wageIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="wage"]
     ${bonusIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="bonus"]
     @{elements} =     Create List    ${wageIcon}    ${bonusIcon}
-    Wait Until Elements Are Visible On Page    @{elements}
+    Wait Until Elements Are Visible On View    @{elements}
 
 Wait Until Add New Transaction View Is Visible
     ${inputTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText
-    Wait Until Element Is Visible On Page    ${inputTextField}
+    Wait Until Element Is Visible On View    ${inputTextField}
 
 Open New Transaction View
-    Click Element On Page    ${addNewTransactionButton}
+    Click Element On View    ${addNewTransactionButton}
     Wait Until Expense View Is Visible
     Wait Until Add New Transaction View Is Visible
 
 Select Income On New Transaction View
     ${incomeIcon} =    Set Variable    //android.view.View[@content-desc="Income"]
-    Wait Until Element Is Visible On Page    ${incomeIcon}
-    Click Element On Page    ${incomeIcon}
+    Wait Until Element Is Visible On View    ${incomeIcon}
+    Click Element On View    ${incomeIcon}
     Wait Until Income View Is Visible
 
 Choose Type On New Transaction View
@@ -67,25 +107,25 @@ Choose Type On New Transaction View
     ${typeView} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View
     ${typeIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="${type}"]
     Scroll    ${typeIcon}    ${typeView}
-    Click Element On Page    ${typeIcon}
+    Click Element On View    ${typeIcon}
 
 Click Digital Button On New Transaction View
     [Arguments]    ${digital}
     ${digitalButton} =    Set Variable    xpath=//android.widget.Button[@content-desc="${digital}"]
-    Click Element On Page    ${digitalButton}
+    Click Element On View    ${digitalButton}
 
 Input Amount On New Transaction View
-    [Arguments]    ${amount}    ${account}=default account    ${unit}=USD
-    ${amountField} =    Set Variable    //android.view.View[@content-desc="${account}(${unit})${amount}"]
+    [Arguments]    ${amount}
+    ${amountField} =    Set Variable    //android.view.View[contains(@content-desc, '${amount}')]
     @{digitals} =    Split String To Characters    ${amount}
     FOR    ${digital}    IN    @{digitals}
         Click Digital Button On New Transaction View    ${digital}
     END
-    Wait Until Element Is Visible On Page    ${amountField}
+    Wait Until Element Is Visible On View    ${amountField}
 
 Click OK Button On New Transaction View
     ${okButton} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View[4]/android.widget.ImageView
-    Click Element On Page    ${okButton}
+    Click Element On View    ${okButton}
 
 Default View Should Be Visible
     Wait Until Default View Is Visible
@@ -93,26 +133,26 @@ Default View Should Be Visible
 Transaction Should Be Visible On Default View
     [Arguments]    ${type}    ${amount}    ${from}=myself    ${account}=default account
     ${transactionInfo} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]
-    Wait Until Element Is Visible On Page    ${transactionInfo}
+    Wait Until Element Is Visible On View    ${transactionInfo}
 
 Wait Until Add New Book View Is Visible
     ${addBookButtonOnNewBookView} =    Set Variable    xpath=//android.view.View[@content-desc="+Add"]
-    Wait Until Element Is Visible On Page    ${addBookButtonOnNewBookView}
+    Wait Until Element Is Visible On View    ${addBookButtonOnNewBookView}
 
 Wait Until Wallet View Is Visible
     ${cashText} =    Set Variable    xpath=//android.view.View[@content-desc="Cash"]
-    Wait Until Element Is Visible On Page    ${cashText}
+    Wait Until Element Is Visible On View    ${cashText}
 
 Go To Wallet View
-    Click Element On Page    ${walletButton}
+    Click Element On View    ${walletButton}
     Wait Until Wallet View Is Visible
 
 Wait Until Analytics View Is Visible
     ${titleText} =    Set Variable    xpath=//android.view.View[@content-desc="Analytics"]
-    Wait Until Element Is Visible On Page    ${titleText}
+    Wait Until Element Is Visible On View    ${titleText}
 
 Go To Analytics View
-    Click Element On Page    ${analyticsButton}
+    Click Element On View    ${analyticsButton}
     Wait Until Analytics View Is Visible
 
 Wait Until Settings View Is Visible
@@ -120,46 +160,46 @@ Wait Until Settings View Is Visible
     ${themeSettingsIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Theme Settings"]
     ${periodicBillIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Periodic bill"]
     @{elements} =     Create List    ${languageIcon}    ${themeSettingsIcon}    ${periodicBillIcon}
-    Wait Until Elements Are Visible On Page    @{elements}
+    Wait Until Elements Are Visible On View    @{elements}
 
 Go To Settings View
-    Click Element On Page    ${settingsButton}
+    Click Element On View    ${settingsButton}
     Wait Until Settings View Is Visible
 
 Click Accounts On Settings View
     ${accountsIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Accounts"]
     ${accountTitle} =    Set Variable    xpath=//android.view.View[@content-desc="Accounts"]
-    Click Element On Page    ${accountsIcon}
-    Wait Until Element Is Visible On Page    ${accountTitle}
+    Click Element On View    ${accountsIcon}
+    Wait Until Element Is Visible On View    ${accountTitle}
 
 Select Account On Accounts View
     [Arguments]    ${accountName}
     ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="${accountName}"]
     ${accountEditView} =    Set Variable    xpath=//android.view.View[@content-desc="Edit Account"]
-    Click Element On Page    ${accountLabel}
-    Wait Until Element Is Visible On Page    ${accountEditView}
+    Click Element On View    ${accountLabel}
+    Wait Until Element Is Visible On View    ${accountEditView}
 
 Change Currency
     [Arguments]    ${currency}
     ${defaultCurrencyIcon} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, "American dollar(USD)")]
     ${newCurrencyIcon} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "${currency}")]
-    Click Element On Page    ${defaultCurrencyIcon}
+    Click Element On View    ${defaultCurrencyIcon}
     #TODO check?
-    Click Element On Page    ${newCurrencyIcon}
+    Click Element On View    ${newCurrencyIcon}
 
 Currency Should Be
     [Arguments]    ${currency}
     ${currencyText} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, "${currency}")]
-    Wait Until Element Is Visible On Page    ${currencyText}
+    Wait Until Element Is Visible On View    ${currencyText}
 
 Change Member
     [Arguments]    ${member}
     ${memberButton} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View[1]/android.widget.ImageView
     ${wifeButton} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="${member}"]
     ${memberChooseTitle} =    Set Variable    xpath=//android.view.View[@content-desc="member choose"]
-    Click Element On Page    ${memberButton}
-    Wait Until Element Is Visible On Page    ${memberChooseTitle}
-    Click Element On Page    ${wifeButton}
+    Click Element On View    ${memberButton}
+    Wait Until Element Is Visible On View    ${memberChooseTitle}
+    Click Element On View    ${wifeButton}
 
 Change Date
     ${dateButton} =    Set Variable    //android.widget.Button[@content-desc="TODAY"]
@@ -167,47 +207,47 @@ Change Date
     ${date} =    Set Variable    //android.view.View[contains(@content-desc, "1,")]
     ${okButton} =    Set Variable    //android.widget.Button[@content-desc="OK"]
     ${nowDateButton} =    Set Variable    //android.widget.Button[contains(@content-desc, "/01")]
-    Click Element On Page    ${dateButton}
-    Wait Until Element Is Visible On Page    ${penButton}
-    Click Element On Page    ${date}
-    Click Element On Page    ${okButton}
-    Wait Until Element Is Visible On Page    ${nowDateButton}
+    Click Element On View    ${dateButton}
+    Wait Until Element Is Visible On View    ${penButton}
+    Click Element On View    ${date}
+    Click Element On View    ${okButton}
+    Wait Until Element Is Visible On View    ${nowDateButton}
 
 Click Equal Button On Transaction View
     ${equalButton} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[5]/android.view.View/android.view.View[4]/android.widget.ImageView
-    Click Element On Page    ${equalButton}
+    Click Element On View    ${equalButton}
 
 Number On View Should Be
     [Arguments]    ${amount}    ${account}=default account    ${unit}=USD
     ${amountField} =    Set Variable    //android.view.View[@content-desc="${account}(${unit})${amount}"]
-    Wait Until Element Is Visible On Page    ${amountField}
+    Wait Until Element Is Visible On View    ${amountField}
 
 Switch To Calendar View
     ${calendarButton} =    Set Variable    xpath=//android.view.View[@content-desc="Calendar"]
     # ${calendarImage} =    Set Variable    
-    Click Element On Page    ${calendarButton}
+    Click Element On View    ${calendarButton}
     #TODO check calendar is visible
 
 Change View To Week, 2Weeks, Month
     ${changeToWeek} =    Set Variable    //android.view.View[@content-desc="Month"]
     ${changeTo2Week} =    Set Variable    //android.view.View[@content-desc="Week"]
     ${changeToMonth} =    Set Variable    //android.view.View[@content-desc="2 Weeks"]
-    Click Element On Page    ${changeToWeek}
-    Click Element On Page    ${changeTo2Week}
-    Click Element On Page    ${changeToMonth}
+    Click Element On View    ${changeToWeek}
+    Click Element On View    ${changeTo2Week}
+    Click Element On View    ${changeToMonth}
 
 Click Transaction
     [Arguments]    ${type}    ${amount}    ${from}=myself    ${account}=default account
     ${transaction} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]
     ${editPanButton} =     Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]/android.widget.Button[3]
-    Click Element On Page    ${transaction}
-    Wait Until Element Is Visible On Page    ${editPanButton}
+    Click Element On View    ${transaction}
+    Wait Until Element Is Visible On View    ${editPanButton}
 
 Edit Transaction Type
     [Arguments]    ${newType}    ${type}    ${amount}    ${from}=myself    ${account}=default account
     ${editPanButton} =     Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]/android.widget.Button[3]
     Click Transaction    ${type}    ${amount}    ${from}    ${account}
-    Click Element On Page    ${editPanButton}
+    Click Element On View    ${editPanButton}
     Wait Until Add New Transaction View Is Visible
     Choose Type On New Transaction View    type=${newType}
     Click OK Button On New Transaction View
@@ -216,19 +256,19 @@ Click Expense Analysis On Default View
     ${expenseText} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Expenses") and (not(contains(@content-desc, ":")))]
     ${expenseAnalysisTitle} =    Set Variable    xpath=//android.view.View[@content-desc="Expense"]
     ${analysisDropdown} =     Set Variable    xpath=//android.view.View[contains(@content-desc, 'Show') and contains(@content-desc, 'menu') and contains(@content-desc, 'By') and contains(@content-desc, 'Category')]
-    Click Element On Page    ${expenseText}
-    Wait Until Elements Are Visible On Page    ${expenseAnalysisTitle}    ${analysisDropdown}
+    Click Element On View    ${expenseText}
+    Wait Until Elements Are Visible On View    ${expenseAnalysisTitle}    ${analysisDropdown}
 
 Click Income Analysis
     &{incomeIcon} =    Create Dictionary    x=730    y=473
     ${incomeAnalysisTitle} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Income")]
     ${analysisDropdown} =     Set Variable    xpath=//android.view.View[contains(@content-desc, 'Show') and contains(@content-desc, 'menu') and contains(@content-desc, 'By') and contains(@content-desc, 'Category')]
     Click Element At Coordinates    ${incomeIcon}[x]    ${incomeIcon}[y]
-    Wait Until Elements Are Visible On Page    ${incomeAnalysisTitle}    ${analysisDropdown}
+    Wait Until Elements Are Visible On View    ${incomeAnalysisTitle}    ${analysisDropdown}
 
 Analysis Figure Should Be Visible
     ${analysisFigure} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]
-    Wait Until Element Is Visible On Page    ${analysisFigure}
+    Wait Until Element Is Visible On View    ${analysisFigure}
 
 Expense Analysis Should Be Visible
     Analysis Figure Should Be Visible
@@ -237,39 +277,134 @@ Income Analysis Should Be Visible
     Analysis Figure Should Be Visible
 
 Go To Books View
-    Click Element On Page    ${booksButton}
-    Wait Until Wallet View Is Visible
+    Click Element On View    ${booksButton}
+    Wait Until Default View Is Visible
 
 Open New Account View
     ${addButton} =    Set Variable    xpath=//android.view.View[@content-desc="+Add"]
     ${newAccountLabel} =    Set Variable    xpath=//android.view.View[@content-desc="New Account"]
-    Click Element On Page    ${addButton}
-    Wait Until Element Is Visible On Page    ${newAccountLabel}
+    Click Element On View    ${addButton}
+    Wait Until Element Is Visible On View    ${newAccountLabel}
 
 Choose Account Type
     [Arguments]    ${type}
     ${typeLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}')]
     ${editView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Create") and contains(@content-desc, '${type}')]
-    Click Element On Page    ${typeLabel}
-    Wait Until Element Is Visible On Page    ${editView}
+    Click Element On View    ${typeLabel}
+    Wait Until Element Is Visible On View    ${editView}
+
+Click Shift On Keyboard
+    Click Element At Coordinates    ${shiftButton}[x]    ${shiftButton}[y]
+
+Click Character On Keyboard
+    [Arguments]    ${character}
+    Click Element At Coordinates    ${charactersPosition}[${character}][x]    ${charactersPosition}[${character}][y]
+
+Input Text By Keyboard
+    [Arguments]    ${text}
+    @{characters} =    Split String To Characters    ${text}
+    FOR    ${character}    IN    @{characters}
+        ${convertedCharacter} =    Convert To Lower Case    ${character}
+        Run Keyword If    '${convertedCharacter}' != '${character}'    Click Shift On Keyboard
+        Click Character On Keyboard    ${convertedCharacter}
+    END
 
 Input New Account Name
     [Arguments]    ${name}
-    # ${nameTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.ImageView[1]
-    ${nameTextField} =    Set Variable    xpath=//android.widget.EditText[contains(@content-desc, 'Account Name')]
-    # Click Element On Page    ${nameTextField}
-    # Set
-    Input Text    ${nameTextField}    ${name}
+    ${nameTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.ImageView[1]
+    Click Element On View    ${nameTextField}
+    Sleep    2s
+    Input Text By Keyboard    ${name}
+
+Click Digital On Keyboard
+    [Arguments]    ${digital}
+    Click Element At Coordinates    ${numbersPosition}[${digital}][x]    ${numbersPosition}[${digital}][y]
+
+Input Number By Keyboard
+    [Arguments]    ${number}
+    @{digitals} =    Split String To Characters    ${number}
+    FOR    ${digital}    IN    @{digitals}
+        Click Digital On Keyboard    ${digital}
+    END
+
+Input New Account Balance
+    [Arguments]    ${balance}
+    ${balanceNumberField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.ImageView[2]
+    Click Element On View    ${balanceNumberField}
+    Sleep    2s
+    Input Number By Keyboard    ${balance}
+
+Click Save Button
+    [Arguments]    ${position}
+    ${saveButton} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button[${position}]
+    Click Element On View    ${saveButton}
+
+Save New Account
+    Click Save Button    2
+
+Save Accounts
+    Click Save Button    2
 
 Add A New Account
     [Arguments]    ${name}=newAccount    ${type}=Cash    ${balance}=1000    ${currency}=${EMPTY}    ${icon}=${EMPTY}    ${note}=${EMPTY}
-    Click Accounts On Settings View
+    ${newAccountLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${name}')]
     Open New Account View
     Choose Account Type    ${type}
     Input New Account Name    ${name}
-    # Input New Account Balance    ${balance}
+    Input New Account Balance    ${balance}
     # Choose New Account Currency    ${currency}
     # Choose New Account Icon    ${icon}
     # Input New Account Note    ${note}
-    # Save
-    # Wait Until Elements
+    Save New Account
+    Wait Until Element Is Visible On View    ${newAccountLabel}
+
+Click Account On Accounts View
+    [Arguments]    ${name}
+    ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${name}')]
+    ${editView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Edit Account")]
+    Click Element On View    ${accountLabel}
+    Wait Until Element Is Visible On View    ${editView}
+
+Click Backspace
+    [Arguments]    ${time}
+    ${times}    Convert To Integer    ${time}
+    FOR    ${i}    IN RANGE    ${times}
+        Click Element At Coordinates    994    1862
+    END
+
+Delete Account Name Content
+    Click Element At Coordinates    1027    401
+    Click Backspace    15
+
+Click Edit Save Button
+    Click Save Button    3
+
+Edit Account Name
+    [Arguments]    ${newName}
+    ${nameTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.ImageView[1]
+    Click Element On View    ${nameTextField}
+    Delete Account Name Content
+    Input Text By Keyboard    ${newName}
+    Click Edit Save Button
+
+Account Name Should Be Edited
+    ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, 'changedAccount')]
+    Wait Until Element Is Visible On View    ${accountLabel}
+
+Click Account On Wallet View
+    [Arguments]    ${name}
+    ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${name}')]
+    ${accountDetailView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Details')]
+    Click Element On View    ${accountLabel}
+    Wait Until Element Is Visible On View    ${accountDetailView}
+
+Click Edit Button On Account Detail View
+    ${editButton} =    Set Variable    xpath=//android.widget.ImageView/android.widget.Button
+    ${editView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Edit Account")]
+    Click Element On View    ${editButton}
+    Wait Until Element Is Visible On View    ${editView}
+
+Transaction Should Be Visible On Account Detail View    # TODO refactor
+    [Arguments]    ${type}    ${amount}    ${from}=myself    ${account}=default account
+    ${transactionInfo} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]
+    Wait Until Element Is Visible On View    ${transactionInfo}

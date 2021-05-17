@@ -10,6 +10,7 @@ ${addNewBookButton} =    xpath=//android.widget.ImageView[@content-desc="add Boo
 
 *** Test cases ***
 Add a new expense transaction on default view
+    [Tags]    TC-1-01    TC-1-05
     Open New Transaction View
     Choose Type On New Transaction View    type=pet
     Input Amount On New Transaction View    amount=56123
@@ -18,6 +19,7 @@ Add a new expense transaction on default view
     Transaction Should Be Visible On Default View    type=pet    amount=-$56,123
 
 Add a new income transaction on default view
+    [Tags]    TC-1-02    TC-1-06
     Open New Transaction View
     Select Income On New Transaction View
     Choose Type On New Transaction View    type=parttime job
@@ -27,6 +29,7 @@ Add a new income transaction on default view
     Transaction Should Be Visible On Default View    type=parttime job    amount=+$551,234
 
 Add a new expense with different member
+    [Tags]    TC-1-03
     Open New Transaction View
     Change Member    member=wife
     Input Amount On New Transaction View    amount=551234
@@ -35,6 +38,7 @@ Add a new expense with different member
     Transaction Should Be Visible On Default View    type=diet    amount=-$551,234    from=wife
 
 Add a new income transaction with different member
+    [Tags]    TC-1-04
     Open New Transaction View
     Select Income On New Transaction View
     Choose Type On New Transaction View    type=bonus
@@ -45,6 +49,7 @@ Add a new income transaction with different member
     Transaction Should Be Visible On Default View    type=bonus    amount=+$551,234    from=wife
 
 Add a new expense with different date
+    [Tags]    TC-1-07
     Open New Transaction View
     Change Date
     Input Amount On New Transaction View    amount=551234
@@ -53,6 +58,7 @@ Add a new expense with different date
     Transaction Should Be Visible On Default View    type=diet    amount=-$551,234
 
 Add a new income with different date
+    [Tags]    TC-1-08
     Open New Transaction View
     Select Income On New Transaction View
     Change Date
@@ -62,6 +68,7 @@ Add a new income with different date
     Transaction Should Be Visible On Default View    type=wage    amount=+$551,234
 
 Add a new expense with different calculation
+    [Tags]    TC-1-09
     Open New Transaction View
     Input Amount On New Transaction View    amount=23x11
     Click Equal Button On Transaction View
@@ -71,6 +78,7 @@ Add a new expense with different calculation
     Transaction Should Be Visible On Default View    type=diet    amount=-$253
 
 Add a new income with different calculation
+    [Tags]    TC-1-10
     Open New Transaction View
     Select Income On New Transaction View
     Input Amount On New Transaction View    amount=23/23
@@ -81,11 +89,13 @@ Add a new income with different calculation
     Transaction Should Be Visible On Default View    type=wage    amount=+$1
 
 Watch information with month, 2week, and week
+    [Tags]    TC-1-11
     Default View Should Be Visible
     Switch To Calendar View
     Change View To Week, 2Weeks, Month
 
 Edit a expense transaction on default view
+    [Tags]    TC-1-12
     [Setup]    Run Keywords    Open New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=56123
     ...                 AND    Click OK Button On New Transaction View
@@ -95,6 +105,7 @@ Edit a expense transaction on default view
     Transaction Should Be Visible On Default View    type=gift    amount=-$56,123
 
 Edit a income transaction on default view
+    [Tags]    TC-1-13
     [Setup]    Run Keywords    Open New Transaction View
     ...                 AND    Select Income On New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=56123
@@ -105,6 +116,7 @@ Edit a income transaction on default view
     Transaction Should Be Visible On Default View    type=investment    amount=+$56,123
 
 Watch expense analysis
+    [Tags]    TC-1-14
     [Setup]    Run Keywords    Open New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=77777
     ...                 AND    Click OK Button On New Transaction View
@@ -114,6 +126,7 @@ Watch expense analysis
     Expense Analysis Should Be Visible
 
 Watch income analysis
+    [Tags]    TC-1-15
     [Setup]    Run Keywords    Open New Transaction View
     ...                 AND    Select Income On New Transaction View
     ...                 AND    Input Amount On New Transaction View    amount=66666
@@ -124,13 +137,21 @@ Watch income analysis
     Income Analysis Should Be Visible
 
 Add a new expense with different account
+    [Tags]    TC-1-16
     [Setup]    Run Keywords    Go To Settings View
-    ...                 AND    Add A New Account
+    ...                 AND    Click Accounts On Settings View
+    ...                 AND    Add A New Account    name=NewAccount
+    ...                 AND    Save Accounts
     ...                 AND    Go To Books View
-    Log    123
+    Open New Transaction View
+    Choose Type On New Transaction View    type=pet
+    Input Amount On New Transaction View    amount=56123
+    Click OK Button On New Transaction View
+    Default View Should Be Visible
+    Transaction Should Be Visible On Default View    type=pet    amount=-$56,123    account=NewAccount
 
 Add a new book on default view
-    Click Element On Page    ${addNewBookButton}
+    Click Element On View    ${addNewBookButton}
     Wait Until Add New Book View Is Visible
     #FIXME The payment page will open after click add book button
 
