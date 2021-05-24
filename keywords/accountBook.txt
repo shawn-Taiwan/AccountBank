@@ -1,0 +1,51 @@
+*** Setting ***
+Resource    ./common.txt
+Library    String
+Library    AppiumLibrary
+
+*** Keywords ***
+Select Income On New Transaction View
+    ${incomeIcon} =    Set Variable    //android.view.View[@content-desc="Income"]
+    Wait Until Element Is Visible On View    ${incomeIcon}
+    Click Element On View    ${incomeIcon}
+    Wait Until Income View Is Visible
+
+Select Account On Accounts View
+    [Arguments]    ${accountName}
+    ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="${accountName}"]
+    ${accountEditView} =    Set Variable    xpath=//android.view.View[@content-desc="Edit Account"]
+    Click Element On View    ${accountLabel}
+    Wait Until Element Is Visible On View    ${accountEditView}
+
+Click Accounts On Settings View
+    ${accountsIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Accounts"]
+    ${accountTitle} =    Set Variable    xpath=//android.view.View[@content-desc="Accounts"]
+    Click Element On View    ${accountsIcon}
+    Wait Until Element Is Visible On View    ${accountTitle}
+
+Add A New Account
+    [Arguments]    ${name}=newAccount    ${type}=Cash    ${balance}=1000    ${currency}=${EMPTY}    ${icon}=${EMPTY}    ${note}=${EMPTY}
+    ${newAccountLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${name}')]
+    Open New Account View
+    Choose Account Type    ${type}
+    Input New Account Name    ${name}
+    Input New Account Balance    ${balance}
+    # Choose New Account Currency    ${currency}
+    # Choose New Account Icon    ${icon}
+    # Input New Account Note    ${note}
+    Save New Account
+    Wait Until Element Is Visible On View    ${newAccountLabel}
+
+Input New Account Name
+    [Arguments]    ${name}
+    ${nameTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.ImageView[1]
+    Click Element On View    ${nameTextField}
+    Sleep    2s
+    Input Text By Keyboard    ${name}
+
+Click Account On Accounts View
+    [Arguments]    ${name}
+    ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${name}')]
+    ${editView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Edit Account")]
+    Click Element On View    ${accountLabel}
+    Wait Until Element Is Visible On View    ${editView}

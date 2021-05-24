@@ -1,0 +1,23 @@
+*** Setting ***
+Resource    ./common.txt
+Library    AppiumLibrary
+
+*** Keywords ***
+Expense Analysis Label Is Visible
+    ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Expense')]
+    Wait Until Element Is Visible On View    ${analysisLabel}
+
+Analysis Chart Is Visible
+    ${chart} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]
+    Wait Until Element Is Visible On View    ${chart}
+
+Open Category Dropdown
+    ${categoryButton} =    Set Variable    //android.view.View[contains(@content-desc, 'Show') and contains(@content-desc, 'menu') and contains(@content-desc, 'By')]
+    ${categoryDropdown} =    Set Variable    //android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View
+    Click Element On View    ${categoryButton}
+    Wait Until Element Is Visible On View    ${categoryDropdown}
+
+Select Category Option
+    [Arguments]    ${option}
+    ${category} =    Set Variable    //android.widget.Button[contains(@content-desc, 'By ${option}')]
+    Click Element On View    ${category}

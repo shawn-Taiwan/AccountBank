@@ -1,12 +1,10 @@
 *** Settings ***
 Library    AppiumLibrary
 Resource    ../keywords/common.txt
+Resource    ../keywords/accountBook.txt
 
 Suite Setup    Open Account Bank
 Suite Teardown    Close Application
-
-*** Variables ***
-${addNewBookButton} =    xpath=//android.widget.ImageView[@content-desc="add Book"]
 
 *** Test cases ***
 Add a new expense transaction on default view
@@ -150,19 +148,6 @@ Add a new expense with different account
     Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=pet    amount=-$56,123    account=NewAccount
 
-Add a new book on default view
-    Click Element On View    ${addNewBookButton}
-    Wait Until Add New Book View Is Visible
-    #FIXME The payment page will open after click add book button
-
-Open wallet view
-    Go To Wallet View
-
-Open analytics view
-    Go To Analytics View
-
-Open settings view
-    Go To Settings View
 
 Change currency from USD to NTD
     [Setup]    Run Keywords    Go To Settings View

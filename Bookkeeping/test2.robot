@@ -1,5 +1,6 @@
 *** Settings ***
 Library    AppiumLibrary
+Resource    ../keywords/wallet.txt
 Resource    ../keywords/common.txt
 
 Suite Setup    Open Account Bank

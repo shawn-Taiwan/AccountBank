@@ -1,0 +1,34 @@
+*** Setting ***
+Resource    ./common.txt
+Library    AppiumLibrary
+
+*** Keywords ***
+Edit Account Name
+    [Arguments]    ${newName}
+    ${nameTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.widget.ImageView[1]
+    Click Element On View    ${nameTextField}
+    Delete Account Name Content
+    Input Text By Keyboard    ${newName}
+    Click Edit Save Button
+
+Account Name Should Be Edited
+    ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, 'changedAccount')]
+    Wait Until Element Is Visible On View    ${accountLabel}
+
+Click Account On Wallet View
+    [Arguments]    ${name}
+    ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${name}')]
+    ${accountDetailView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Details')]
+    Click Element On View    ${accountLabel}
+    Wait Until Element Is Visible On View    ${accountDetailView}
+
+Click Edit Button On Account Detail View
+    ${editButton} =    Set Variable    xpath=//android.widget.ImageView/android.widget.Button
+    ${editView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Edit Account")]
+    Click Element On View    ${editButton}
+    Wait Until Element Is Visible On View    ${editView}
+
+Transaction Should Be Visible On Account Detail View    # TODO refactor
+    [Arguments]    ${type}    ${amount}    ${from}=myself    ${account}=default account
+    ${transactionInfo} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]
+    Wait Until Element Is Visible On View    ${transactionInfo}
