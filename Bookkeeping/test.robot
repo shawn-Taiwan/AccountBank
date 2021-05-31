@@ -143,11 +143,11 @@ Add a new expense with different account
     ...                 AND    Go To Books View
     Open New Transaction View
     Choose Type On New Transaction View    type=pet
+    Choose Account On New Transactin View    account=NewAccount
     Input Amount On New Transaction View    amount=56123
     Click OK Button On New Transaction View
     Default View Should Be Visible
     Transaction Should Be Visible On Default View    type=pet    amount=-$56,123    account=NewAccount
-
 
 Change currency from USD to NTD
     [Setup]    Run Keywords    Go To Settings View

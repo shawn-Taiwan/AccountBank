@@ -3,11 +3,11 @@ Resource    ./common.txt
 Library    AppiumLibrary
 
 *** Keywords ***
-Expense Analysis Label Is Visible
+Expense Analysis Label Should Be Visible
     ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Expense')]
     Wait Until Element Is Visible On View    ${analysisLabel}
 
-Analysis Chart Is Visible
+Analysis Chart Should Be Visible
     ${chart} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View[2]
     Wait Until Element Is Visible On View    ${chart}
 
@@ -21,3 +21,120 @@ Select Category Option
     [Arguments]    ${option}
     ${category} =    Set Variable    //android.widget.Button[contains(@content-desc, 'By ${option}')]
     Click Element On View    ${category}
+
+Click Income Analysis Label
+    ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Income')]
+    Click Element On View    ${analysisLabel}
+
+Income Analysis Label Should Be Visible
+    ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Income')]
+    Wait Until Element Is Visible On View    ${analysisLabel}
+
+Click Budget Analysis Label
+    ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Budget')]
+    Click Element On View    ${analysisLabel}
+
+Budget Analysis Label Should Be Visible
+    ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Budget')]
+    Wait Until Element Is Visible On View    ${analysisLabel}
+
+Go To Budget Settings
+    ${settingsLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Budget Settings')]
+    ${defaultBook} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, 'default book')]
+    Click Element On View    ${settingsLabel}
+    Wait Until Element Is Visible On View    ${defaultBook}
+
+Click Setting Label
+    [Arguments]    ${name}
+    ${label} =    Set Variable    xpath=//android.view.View[contains(@content-desc, '${name}')]
+    Click Element On View    ${label}
+
+Click Default Book Label
+    ${defaultBook} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, 'default book')]
+    ${okButton} =    Set Variable    xpath=//android.widget.Button[contains(@content-desc, 'OK')]
+    Click Element On View    ${defaultBook}
+    Wait Until Element Is Visible On View    ${okButton}
+
+Input Budget
+    [Arguments]    ${budget}
+    Input Number By Keyboard    ${budget}
+
+Save Budget
+    ${okButton} =    Set Variable    xpath=//android.widget.Button[contains(@content-desc, 'OK')]
+    Click Element On View    ${okButton}
+
+Set Budget
+    [Arguments]    ${period}    ${budget}
+    Click Setting Label    ${period}
+    Click Default Book Label
+    Input Budget    ${budget}
+    Save Budget
+
+Set Monthly Budget
+    [Arguments]    ${budget}
+    Set Budget    Monthly    ${budget}
+
+Set Annual Budget
+    [Arguments]    ${budget}
+    Set Budget    Annual    ${budget}
+
+Set Weekly Budget
+    [Arguments]    ${budget}
+    Set Budget    Weekly    ${budget}
+
+Go Back To Analysis View
+    ${backButton} =    Set Variable    xpath=//android.widget.Button[contains(@content-desc, 'Back')]
+    Click Element On View    ${backButton}
+    Budget Analysis Label Should Be Visible
+
+Select Budget Dropdown
+    [Arguments]    ${option}
+    ${budgetButton} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Show menu')]
+    ${budgetMenuOption} =    Set Variable    xpath=//android.widget.Button[contains(@content-desc, '${option} Budget')]
+    Click Element On View    ${budgetButton}
+    Click Element On View    ${budgetMenuOption}
+
+Budget Chart Should Be Visible
+    [Arguments]    ${period}    ${budget}
+    ${budgetName} =    Set Variable    xpath=//android.view.View[contains(@content-desc, '${period}')]
+    ${budgetLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, '${budget}')]
+    Wait Until Elements Are Visible On View    ${budgetName}    ${budgetLabel}
+
+Click Trends Label
+    ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Trends')]
+    Click Element On View    ${analysisLabel}
+
+Trends Analysis Label Should Be Visible
+    ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Trends')]
+    Wait Until Element Is Visible On View    ${analysisLabel}
+
+Trends Chart Should Be Visible
+    [Arguments]    ${maxValue}
+    ${chart} =    Set Variable    xpath=//android.view.View[contains(@content-desc, '${maxValue}')]
+    Wait Until Element Is Visible On View    ${chart}
+
+Trends Transaction Should Be Visible
+    [Arguments]    ${income}    ${expenses}    ${total}
+    ${transaction} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${income}') and contains(@content-desc, '${expenses}') and contains(@content-desc, '${total}')]
+    Wait Until Element Is Visible On View    ${transaction}
+
+Click Assets Label
+    ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Assets')]
+    Click Element On View    ${analysisLabel}
+
+Assets Analysis Label Should Be Visible
+    ${analysisLabel} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Assets')]
+    Wait Until Element Is Visible On View    ${analysisLabel}
+
+Assets Transaction Should Be Visible
+    [Arguments]    ${expensesIncome}    ${balance}
+    ${transaction} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${expensesIncome}') and contains(@content-desc, '${balance}')]
+    Wait Until Element Is Visible On View    ${transaction}
+
+Select Assets Dropdown
+    [Arguments]    ${option}
+    ${assetsButton} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Show')]
+    ${assetsMenuOption} =    Set Variable    xpath=//android.widget.Button[contains(@content-desc, '${option}')]
+    # Click Element On View    ${assetsButton}
+    Click Element At Coordinates    156    326
+    Click Element On View    ${assetsMenuOption}

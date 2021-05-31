@@ -99,6 +99,12 @@ Wait Until Add New Transaction View Is Visible
     ${inputTextField} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.EditText
     Wait Until Element Is Visible On View    ${inputTextField}
 
+Select Income On New Transaction View
+    ${incomeIcon} =    Set Variable    //android.view.View[@content-desc="Income"]
+    Wait Until Element Is Visible On View    ${incomeIcon}
+    Click Element On View    ${incomeIcon}
+    Wait Until Income View Is Visible
+
 Choose Type On New Transaction View
     [Arguments]    ${type}
     ${typeView} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View/android.view.View/android.view.View

@@ -4,12 +4,6 @@ Library    String
 Library    AppiumLibrary
 
 *** Keywords ***
-Select Income On New Transaction View
-    ${incomeIcon} =    Set Variable    //android.view.View[@content-desc="Income"]
-    Wait Until Element Is Visible On View    ${incomeIcon}
-    Click Element On View    ${incomeIcon}
-    Wait Until Income View Is Visible
-
 Select Account On Accounts View
     [Arguments]    ${accountName}
     ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="${accountName}"]
@@ -49,3 +43,12 @@ Click Account On Accounts View
     ${editView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, "Edit Account")]
     Click Element On View    ${accountLabel}
     Wait Until Element Is Visible On View    ${editView}
+
+Choose Account On New Transactin View
+    [Arguments]    ${account}
+    ${accountButton} =    Set Variable    xpath=//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.widget.ImageView
+    ${chooseView} =    Set Variable    xpath=//android.view.View[contains(@content-desc, 'Choose')]
+    ${accountLabel} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${account}')]
+    Click Element On View    ${accountButton}
+    Wait Until Element Is Visible On View    ${chooseView}
+    Click Element On View    ${accountLabel}
