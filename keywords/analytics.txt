@@ -49,20 +49,6 @@ Click Setting Label
     ${label} =    Set Variable    xpath=//android.view.View[contains(@content-desc, '${name}')]
     Click Element On View    ${label}
 
-Click Default Book Label
-    ${defaultBook} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, 'default book')]
-    ${okButton} =    Set Variable    xpath=//android.widget.Button[contains(@content-desc, 'OK')]
-    Click Element On View    ${defaultBook}
-    Wait Until Element Is Visible On View    ${okButton}
-
-Input Budget
-    [Arguments]    ${budget}
-    Input Number By Keyboard    ${budget}
-
-Save Budget
-    ${okButton} =    Set Variable    xpath=//android.widget.Button[contains(@content-desc, 'OK')]
-    Click Element On View    ${okButton}
-
 Set Budget
     [Arguments]    ${period}    ${budget}
     Click Setting Label    ${period}

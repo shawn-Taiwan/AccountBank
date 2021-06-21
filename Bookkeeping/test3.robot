@@ -114,4 +114,4 @@ Check other account assets trends chart
     Select Assets Dropdown    NewAccount
     Trends Chart Should Be Visible    maxValue=-40000
     #FIXME Unstable
-    Assets Transaction Should Be Visible    expensesIncome=$44,678    balance=$44,678
+    # Assets Transaction Should Be Visible    expensesIncome=$44,678    balance=$44,678

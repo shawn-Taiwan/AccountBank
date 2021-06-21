@@ -3,3 +3,108 @@ Resource    ./common.txt
 Library    AppiumLibrary
 
 *** Keywords ***
+Change Language
+    [Arguments]    ${languuage}
+    Click Language
+    Select Language    ${languuage}
+
+Click Language
+    ${language} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Language"] | //android.widget.ImageView[@content-desc="語言設置"]
+    Click Element On View    ${language}
+    Wait Until Language Setting View Is Visible
+
+Wait Until Language Setting View Is Visible
+    ${languageView} =    Set Variable    xpath=//android.view.View[@content-desc="Language"] | //android.view.View[@content-desc="語言設置"]
+    Wait Until Element Is Visible On View    ${languageView}
+
+Select Language
+    [Arguments]    ${language}
+    ${option} =    Set Variable    xpath=//android.view.View[@content-desc="${language}"]
+    Click Element On View    ${option}
+    Wait Until Settings View Is Visible
+
+Language Should Be Changed
+    ${languageIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="語言設置"]
+    Wait Until Elements Are Visible On View    ${languageIcon}
+
+Click Theme Settings
+    ${theme} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Theme Settings"]
+    Click Element On View    ${theme}
+
+Theme Should Be Changed
+    ${theme} =    Set Variable    xpath=//android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[2]/android.view.View/android.view.View[1]
+    Click Element On View    ${theme}
+
+Go Back To Settings Page
+    ${back} =    Set Variable    xpath=//android.widget.Button[@content-desc="Back"]
+    Click Element On View    ${back}
+
+Go To Category View
+    ${category} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Categories"]
+    ${categoryView} =    Set Variable    xpath=//android.view.View[@content-desc="Categories"]
+    Click Element On View    ${category}
+    Wait Until Element Is Visible On View    ${categoryView}
+
+Click Income On Category View
+    ${income} =    Set Variable    xpath=//android.view.View[@content-desc="Income"]
+    Click Element On View    ${income}
+
+Create Category
+    [Arguments]    ${category}
+    Click Add Category Button
+    Input New Category    ${category}
+
+Click Add Category Button
+    ${add} =    Set Variable    xpath=//android.view.View[@content-desc="+Add"]
+    ${newCategory} =    Set Variable    xpath=//android.view.View[@content-desc="New Category"]
+    Click Element On View    ${add}
+    Wait Until Element Is Visible On View    ${newCategory}
+
+Input New Category
+    [Arguments]    ${newCategory}
+    ${check} =    Set Variable    xpath=//android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button[2]
+    Click Element At Coordinates    224    316
+    Sleep    2s
+    Input Text By Keyboard    ${newCategory}
+    Click Element On View    ${check}
+
+Category Should Be Created
+    [Arguments]    ${category}
+    ${item} =    Set Variable    //android.widget.ImageView[@content-desc="${category}"]
+    Sleep    2s
+    Swipe    451    1886    0    300    1000
+    Wait Until Element Is Visible On View    ${item}
+
+Go To Member View
+    ${member} =    Set Variable    //android.widget.ImageView[@content-desc="Members"]
+    Click Element On View    ${member}
+
+Click Add Member Button
+    ${add} =    Set Variable    xpath=//android.view.View[@content-desc="+Add"]
+    ${newMember} =    Set Variable    xpath=//android.view.View[@content-desc="new member"]
+    Click Element On View    ${add}
+    Wait Until Element Is Visible On View    ${newMember}
+
+Input New Member
+    [Arguments]    ${newMember}
+    ${check} =    Set Variable    xpath=//android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[1]/android.widget.Button[2]
+    Click Element At Coordinates    224    316
+    Sleep    2s
+    Input Text By Keyboard    ${newMember}
+    Click Element On View    ${check}
+
+Create Member
+    [Arguments]    ${member}
+    Click Add Member Button
+    Input New Member    ${member}
+
+Member Should Be Created
+    [Arguments]    ${member}
+    ${item} =    Set Variable    //android.widget.ImageView[@content-desc="${member}"]
+    Wait Until Element Is Visible On View    ${item}
+
+Go To Budget Setting View
+    ${budget} =    Set Variable    //android.widget.ImageView[contains(@content-desc, "Budget") and contains(@content-desc, "Settings")]
+    ${budgetSetttingsView} =    Set Variable    //android.view.View[contains(@content-desc, "Budget") and contains(@content-desc, "Settings")]
+    Click Element On View    ${budget}
+    Wait Until Element Is Visible On View    ${budgetSetttingsView}

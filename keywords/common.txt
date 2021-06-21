@@ -143,9 +143,9 @@ Go To Wallet View
     Wait Until Wallet View Is Visible
 
 Wait Until Settings View Is Visible
-    ${languageIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Language"]
-    ${themeSettingsIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Theme Settings"]
-    ${periodicBillIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Periodic bill"]
+    ${languageIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Language"] | //android.widget.ImageView[@content-desc="語言設置"]
+    ${themeSettingsIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Theme Settings"] | //android.widget.ImageView[@content-desc="主題設定"]
+    ${periodicBillIcon} =    Set Variable    xpath=//android.widget.ImageView[@content-desc="Periodic bill"] | //android.widget.ImageView[@content-desc="週期記帳"]
     @{elements} =     Create List    ${languageIcon}    ${themeSettingsIcon}    ${periodicBillIcon}
     Wait Until Elements Are Visible On View    @{elements}
 
@@ -334,6 +334,25 @@ Transaction Should Be Visible On Default View
     [Arguments]    ${type}    ${amount}    ${from}=myself    ${account}=default account
     ${transactionInfo} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, '${type}') and contains(@content-desc, '${amount}') and contains(@content-desc, '${from}') and contains(@content-desc, '${account}')]
     Wait Until Element Is Visible On View    ${transactionInfo}
+
+Go Back Button
+    ${back} =    Set Variable    xpath=//android.widget.Button[@content-desc="Back"]
+    Click Element On View    ${back}
+
+Input Budget
+    [Arguments]    ${budget}
+    Input Number By Keyboard    ${budget}
+
+Click Default Book Label
+    ${defaultBook} =    Set Variable    xpath=//android.widget.ImageView[contains(@content-desc, 'default book')]
+    ${okButton} =    Set Variable    xpath=//android.widget.Button[contains(@content-desc, 'OK')]
+    Click Element On View    ${defaultBook}
+    Wait Until Element Is Visible On View    ${okButton}
+
+Save Budget
+    ${okButton} =    Set Variable    xpath=//android.widget.Button[contains(@content-desc, 'OK')]
+    Click Element On View    ${okButton}
+
 # Wait Until Add New Book View Is Visible
     # ${addBookButtonOnNewBookView} =    Set Variable    xpath=//android.view.View[@content-desc="+Add"]
     # Wait Until Element Is Visible On View    ${addBookButtonOnNewBookView}
